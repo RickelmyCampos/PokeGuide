@@ -1,6 +1,13 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
+    kotlin("kapt")
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization") version "1.9.23"
 }
 
 android {
@@ -22,10 +29,29 @@ android {
 
     buildTypes {
         release {
+
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
+            )
+            val secretPropertiesFile = rootProject.file("secrets.properties")
+            val secretProperties = Properties()
+            secretProperties.load(FileInputStream(secretPropertiesFile))
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                secretProperties["BASE_URL"] as String
+            )
+        }
+        debug {
+            val secretPropertiesFile = rootProject.file("secrets.properties")
+            val secretProperties = Properties()
+            secretProperties.load(FileInputStream(secretPropertiesFile))
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                secretProperties["BASE_URL"] as String
             )
         }
     }
@@ -38,9 +64,20 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+        compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
+    }
+    hilt {
+        enableTransformForLocalTests = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
+    kapt {
+        correctErrorTypes = true
     }
     packaging {
         resources {
@@ -50,6 +87,22 @@ android {
 }
 
 dependencies {
+
+    val navigationCompose = "2.7.7"
+    implementation("androidx.navigation:navigation-compose:$navigationCompose")
+
+    val hiltVersion = "2.50"
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    //serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    //retrofit
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
