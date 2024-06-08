@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,7 +27,7 @@ import com.gilbersoncampos.pokeguide.ui.theme.PokeGuideTheme
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), navigateToDetails: (Int) -> Unit) {
     val uiState = viewModel.uiState
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
         when {
             uiState.isLoading -> Column(
                 modifier = Modifier.fillMaxSize(),
