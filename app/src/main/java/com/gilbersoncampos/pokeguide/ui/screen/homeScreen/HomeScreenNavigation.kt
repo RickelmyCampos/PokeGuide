@@ -7,9 +7,9 @@ import androidx.navigation.compose.composable
 import com.gilbersoncampos.pokeguide.navigation.Destinations
 
 val ROUTE = Destinations.Home.route
-fun NavGraphBuilder.homeScreen() {
+fun NavGraphBuilder.homeScreen(navigateToDetails:(Int)->Unit) {
     composable(ROUTE) {
-        HomeScreen()
+        HomeScreen(navigateToDetails=navigateToDetails)
     }
 }
 

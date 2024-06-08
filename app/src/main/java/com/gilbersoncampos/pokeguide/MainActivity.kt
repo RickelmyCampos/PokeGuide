@@ -1,5 +1,6 @@
 package com.gilbersoncampos.pokeguide
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -47,14 +48,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun PokeGuideApp() {
     val navController = rememberNavController()
-    val currentBackStack=navController.currentBackStackEntryAsState()
-    val currentRoute=currentBackStack.value?.destination?.route
-    Scaffold(bottomBar = {
+    val currentBackStack = navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStack.value?.destination?.route
+    Scaffold(
+        topBar = {},
+        bottomBar = {
         NavigationBar {
-            Destinations.BottomNavigation.bottomNavigationScreens.forEachIndexed { index, item ->
+            Destinations.BottomNavigation.bottomNavigationScreens.forEachIndexed { _, item ->
                 NavigationBarItem(
                     icon = {
-                        val icon=item.icon
+                        val icon = item.icon
                         icon?.let {
                             Icon(
                                 painter = painterResource(id = it),

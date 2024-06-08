@@ -10,12 +10,15 @@ import com.gilbersoncampos.pokeguide.ui.screen.favoriteScreen.favoriteScreen
 import com.gilbersoncampos.pokeguide.ui.screen.favoriteScreen.navigateToFavorite
 import com.gilbersoncampos.pokeguide.ui.screen.homeScreen.homeScreen
 import com.gilbersoncampos.pokeguide.ui.screen.homeScreen.navigateToHome
+import com.gilbersoncampos.pokeguide.ui.screen.pokemonDetailsScreen.navigateToDetails
+import com.gilbersoncampos.pokeguide.ui.screen.pokemonDetailsScreen.pokemonDetailsScreen
 
 @Composable
 fun NavGraphHost(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Destinations.Home.route) {
-        homeScreen()
+        homeScreen(navigateToDetails={navController.navigateToDetails(it)})
         favoriteScreen()
+        pokemonDetailsScreen()
     }
 }
 fun NavHostController.navigateInBottomNavigation(destination: Destinations) {
@@ -30,5 +33,6 @@ fun NavHostController.navigateInBottomNavigation(destination: Destinations) {
     when (destination) {
         Destinations.Favorites -> navigateToFavorite(navOptions)
         Destinations.Home -> navigateToHome(navOptions)
+        else -> {}
     }
 }
