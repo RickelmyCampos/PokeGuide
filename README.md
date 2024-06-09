@@ -6,6 +6,12 @@ Welcome to Poke Guide! This is a simple Android application developed in Kotlin 
 * Favorites: Users can add their favorite Pokemon to a local favorites list using Room database.
 
 ## Screenshots
+<div style="display:flex; flex-direction:column">
+   <img src="assets/home.png" alt="Home" width="300" />
+   <img src="assets/search.png" alt="Search" width="300" />
+   <img src="assets/details.png" alt="Details" width="300" />
+   <img src="assets/favorites.png" alt="Favorites" width="300" />
+</div>
 ## Architecture
 The project follows the MVVM (Model-View-ViewModel) architecture pattern to separate the concerns of the application and make it more maintainable.
 ## Libraries Used
