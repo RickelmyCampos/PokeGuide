@@ -12,7 +12,6 @@ The project follows the MVVM (Model-View-ViewModel) architecture pattern to sepa
 * Retrofit: For API calls.
 * Room: For local database storage.
 * Jetpack Compose: For modern UI development.
-* LiveData: For updating the UI in response to data changes.
 * ViewModel: For managing UI-related data in a lifecycle-conscious way.
 * Kotlin Coroutines: For background tasks.
 ## Getting Started
@@ -37,4 +36,6 @@ This project uses the [PokeApi](https://pokeapi.co/) to fetch Pokemon data.
 ## Room Database
 The Room database is used to store the user's favorite Pokemon locally. The database consists of a single table:
 
-* Favorites: Stores the ID and name of the favorite Pokemon.
+* Pokemon: Stores the informations of the favorite Pokemon.
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
