@@ -82,7 +82,7 @@ fun PokemonInfos(pokemon: PokemonDetail,isFavorite:Boolean,clickFavorite:()->Uni
                     error = painterResource(id = R.drawable.ic_image_broken)
                 )
                 IconButton(onClick = clickFavorite) {
-                    Icon( if(isFavorite)Icons.Default.Favorite else Icons.Default.FavoriteBorder, contentDescription = null)
+                    Icon( if(isFavorite)Icons.Default.Favorite else Icons.Default.FavoriteBorder, contentDescription = "favoriteIcon")
                 }
 
             }

@@ -21,7 +21,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.gilbersoncampos.pokeguide.TestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -79,6 +79,9 @@ android {
     kapt {
         correctErrorTypes = true
     }
+    testOptions{
+        unitTests.isIncludeAndroidResources=true
+    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -88,6 +91,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.test.ext:junit-ktx:1.1.5")
     val navigationCompose = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$navigationCompose")
 
@@ -110,7 +114,9 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
+    androidTestImplementation("androidx.room:room-testing:$roomVersion")
     testImplementation("androidx.room:room-testing:$roomVersion")
+
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")

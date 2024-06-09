@@ -50,10 +50,6 @@ fun HomeScreen(
     closeSearch: () -> Unit
 ) {
 
-    BackHandler(enabled = true) {
-        Log.w("BACK", "clicou em voltar")
-        closeSearch()
-    }
 
     val uiState = viewModel.uiState
     Column(modifier = Modifier.fillMaxSize()) {

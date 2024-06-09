@@ -3,4 +3,5 @@
     <string name="home_destination">Home</string>
     <string name="favorites_destination">Favoritos</string>
     <string name="details">Detalhes</string>
+    <string name="empty_text_favorite_list">lista vazia, adicione aos favoritos</string>
 </resources>

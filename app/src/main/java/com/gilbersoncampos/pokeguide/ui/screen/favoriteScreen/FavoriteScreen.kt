@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,7 +50,7 @@ fun FavoriteScreen(viewModel: FavoriteViewModel = hiltViewModel()) {
                 CircularProgressIndicator()
             }
 
-            uiState.favoriteList.isEmpty() -> Text(text = "lista vazia, adicione aos favoritos ")
+            uiState.favoriteList.isEmpty() -> Text(text = stringResource(R.string.empty_text_favorite_list))
             else -> FavoritesListPokemon(
                 pokemonList = uiState.favoriteList,
                 onRemove = viewModel::removeFavorite
