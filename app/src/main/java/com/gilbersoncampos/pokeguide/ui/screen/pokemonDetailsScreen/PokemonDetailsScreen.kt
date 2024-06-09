@@ -1,5 +1,7 @@
 package com.gilbersoncampos.pokeguide.ui.screen.pokemonDetailsScreen
 
+import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -52,7 +55,7 @@ fun PokemonDetailsScreen(viewModel: PokemonDetailsViewModel = hiltViewModel(), p
 
             else -> {
                 uiState.pokemon?.let {
-                    PokemonInfos(it)
+                    PokemonInfos(pokemon=it,isFavorite = uiState.isFavorite,clickFavorite=viewModel::saveFavorites)
                 } ?: Text(text = "Não foi possível encontrar o pokemon")
             }
         }
@@ -60,7 +63,7 @@ fun PokemonDetailsScreen(viewModel: PokemonDetailsViewModel = hiltViewModel(), p
 }
 
 @Composable
-fun PokemonInfos(pokemon: PokemonDetail) {
+fun PokemonInfos(pokemon: PokemonDetail,isFavorite:Boolean,clickFavorite:()->Unit) {
     var spriteIsShiny by remember {
         mutableStateOf<Boolean>(false)
     }
@@ -78,8 +81,8 @@ fun PokemonInfos(pokemon: PokemonDetail) {
                     placeholder = painterResource(id = R.drawable.ic_downloading),
                     error = painterResource(id = R.drawable.ic_image_broken)
                 )
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Default.Favorite, contentDescription = null)
+                IconButton(onClick = clickFavorite) {
+                    Icon( if(isFavorite)Icons.Default.Favorite else Icons.Default.FavoriteBorder, contentDescription = null)
                 }
 
             }
@@ -113,6 +116,6 @@ fun PokemonDetailsScreenPreview() {
         height = 12
     )
 
-    PokemonInfos(pokemon = pokemon)
+    PokemonInfos(pokemon = pokemon,false,{})
     // PokemonDetailsScreen(pokemonId = "asd")
 }

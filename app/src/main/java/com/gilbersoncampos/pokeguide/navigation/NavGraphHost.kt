@@ -14,9 +14,9 @@ import com.gilbersoncampos.pokeguide.ui.screen.pokemonDetailsScreen.navigateToDe
 import com.gilbersoncampos.pokeguide.ui.screen.pokemonDetailsScreen.pokemonDetailsScreen
 
 @Composable
-fun NavGraphHost(navController: NavHostController) {
+fun NavGraphHost(navController: NavHostController,openSearch:Boolean,closeSearch:()->Unit) {
     NavHost(navController = navController, startDestination = Destinations.Home.route) {
-        homeScreen(navigateToDetails={navController.navigateToDetails(it)})
+        homeScreen(navigateToDetails={navController.navigateToDetails(it)},openSearch=openSearch,closeSearch=closeSearch)
         favoriteScreen()
         pokemonDetailsScreen()
     }

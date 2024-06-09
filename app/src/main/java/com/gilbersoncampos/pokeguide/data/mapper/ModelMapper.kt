@@ -1,13 +1,15 @@
 package com.gilbersoncampos.pokeguide.data.mapper
 
+import com.gilbersoncampos.pokeguide.data.local.entity.PokemonEntity
 import com.gilbersoncampos.pokeguide.data.model.Pokemon
 import com.gilbersoncampos.pokeguide.data.model.PokemonDetail
 import com.gilbersoncampos.pokeguide.data.network.dto.PokemonEntryDto
 import com.gilbersoncampos.pokeguide.data.network.dto.ResponsePokemonDetailDto
 
-fun PokemonEntryDto.toModel():Pokemon=
+fun PokemonEntryDto.toModel(): Pokemon =
     Pokemon(this.entry_number, this.pokemon_species.name)
- fun ResponsePokemonDetailDto.toModel(): PokemonDetail =
+
+fun ResponsePokemonDetailDto.toModel(): PokemonDetail =
 
     PokemonDetail(
         id = id,
@@ -21,4 +23,19 @@ fun PokemonEntryDto.toModel():Pokemon=
         spriteShiny = sprites.front_shiny,
         type1 = types[0].type.name,
         type2 = if (types.size > 1) types[1].type.name else null
+    )
+fun PokemonEntity.toModel(): PokemonDetail =
+
+    PokemonDetail(
+        id = id,
+        name = name,
+        height = height,
+        baseExperience = baseExperience,
+        isDefault = isDefault,
+        order = order,
+        weight = weight,
+        spriteDefault = spriteDefault,
+        spriteShiny = spriteShiny,
+        type1 = type1,
+        type2 = type2
     )

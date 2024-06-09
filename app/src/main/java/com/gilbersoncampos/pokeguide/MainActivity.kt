@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,6 +22,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -58,38 +63,56 @@ fun PokeGuideApp() {
     val currentBackStack = navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStack.value?.destination?.route
     val isHome = currentRoute?.equals(Destinations.Home.route) ?: false
+    var openSearch by remember {
+        mutableStateOf(false)
+    }
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "Poke Guide") }, navigationIcon = {
-                if (!isHome)
-                    IconButton(onClick = navController::navigateUp) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                            contentDescription = null
-                        )
-                    }
-            })
-        },
-        bottomBar = {
-            NavigationBar {
-                Destinations.BottomNavigation.bottomNavigationScreens.forEachIndexed { _, item ->
-                    NavigationBarItem(
-                        icon = {
-                            val icon = item.icon
-                            icon?.let {
+            if (!openSearch) {
+                TopAppBar(
+                    title = { Text(text = "Poke Guide") },
+                    navigationIcon = {
+                        if (!isHome)
+                            IconButton(onClick = navController::navigateUp) {
                                 Icon(
-                                    painter = painterResource(id = it),
+                                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                                     contentDescription = null
                                 )
                             }
-                        },
-                        label = { Text(stringResource(id = item.name)) },
-                        selected = currentRoute == item.route,
-                        onClick = {
-                            navController.navigateInBottomNavigation(item)
-                            //selectedItem = index
+                    }, actions = {
+                        if (isHome) {
+                            IconButton(onClick = { openSearch = true }) {
+                                Icon(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = "search"
+                                )
+                            }
                         }
-                    )
+                    })
+            }
+        },
+        bottomBar = {
+            if (!openSearch) {
+                NavigationBar {
+                    Destinations.BottomNavigation.bottomNavigationScreens.forEachIndexed { _, item ->
+                        NavigationBarItem(
+                            icon = {
+                                val icon = item.icon
+                                icon?.let {
+                                    Icon(
+                                        painter = painterResource(id = it),
+                                        contentDescription = null
+                                    )
+                                }
+                            },
+                            label = { Text(stringResource(id = item.name)) },
+                            selected = currentRoute == item.route,
+                            onClick = {
+                                navController.navigateInBottomNavigation(item)
+                                //selectedItem = index
+                            }
+                        )
+                    }
                 }
             }
         }) {
@@ -98,7 +121,10 @@ fun PokeGuideApp() {
             modifier = Modifier
                 .padding(it)
         ) {
-            NavGraphHost(navController = navController)
+            NavGraphHost(
+                navController = navController,
+                openSearch = openSearch,
+                closeSearch = { openSearch = false })
         }
     }
 

@@ -34,16 +34,38 @@ class HomeViewModel @Inject constructor(private val pokemonRepository: PokemonRe
             }
         }
     }
+
+    fun changeTextSearch(text: String) {
+        _uiState.textSearch = text
+        filterPokedex(text)
+    }
+
+    private fun filterPokedex(text: String) {
+        if (text.isBlank()) {
+            _uiState.pokedexFilter = emptyList()
+            return
+        }
+        _uiState.pokedexFilter = _uiState.pokedexList.filter { pokemon ->
+            pokemon.pokemonEntry.toString().contains(text, true) || pokemon.name.contains(
+                text,
+                true
+            )
+        }
+    }
 }
 
 class MutableHomeUiState : HomeUiState {
+    override var pokedexFilter: List<Pokemon> by mutableStateOf(emptyList())
     override var pokedexList: List<Pokemon> by mutableStateOf(emptyList())
     override var isLoading: Boolean by mutableStateOf(false)
+    override var textSearch: String by mutableStateOf("")
 
 }
 
 @Stable
 interface HomeUiState {
+    val textSearch: String
+    val pokedexFilter: List<Pokemon>
     val pokedexList: List<Pokemon>
     val isLoading: Boolean
 }
